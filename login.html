@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Al Buqaa Admin Portal - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#ec5b13", // Theme Primary
+                "brand-navy": "#1e293b",
+                "brand-gold": "#d4af37",
+                "background-light": "#f8f6f6",
+                "background-dark": "#221610",
+              },
+              fontFamily: {
+                "display": ["Public Sans"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+      </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+        .bg-login-pattern {
+            background-color: #1e293b;
+            background-image: radial-gradient(circle at 2px 2px, rgba(212, 175, 55, 0.05) 1px, transparent 0);
+            background-size: 32px 32px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex items-center justify-center p-4 font-display">
+<div class="flex w-full max-w-[1100px] bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-2xl min-h-[600px] border border-slate-200 dark:border-slate-800">
+<!-- Left Side: Visual/Branding -->
+<div class="hidden lg:flex lg:w-1/2 bg-login-pattern relative flex-col justify-between p-12 text-white">
+<div class="z-10">
+<div class="mb-8">
+<img alt="Al Buqaa Logo" class="h-12 w-auto" data-alt="Al Buqaa corporate logo in white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBo1f8-L2MoDY-SG_r_EfCmVd9yiaKPc2ZfcanclJ9jZMgXbxcMCohYKDz4rVaqqPw0hBtIDeNVrH_YGV8vzxwbpE4KCWoLiE9wfWCa-0-PTSobwlsY9RAhmZC679h99Fg-Csd71PrcUKS5AxA9fzibJjcqjgxmSJSPc8IXYOr2x3VZQ3H0i66nFruC5YuFDy9eHk5pTMkjt55UrX-9aU2T87g4a2d6RHUioMVtNb-LQlOZDnuJzrHX6vXgbwLRdVjQF8x10hXrIjt"/>
+</div>
+<h1 class="text-4xl font-bold leading-tight mb-4">Secure Access to <br/><span class="text-brand-gold">Admin Central</span></h1>
+<p class="text-slate-300 text-lg max-w-sm">Manage your properties, residents, and administrative tasks with the professional suite by Al Buqaa.</p>
+</div>
+<div class="z-10">
+<div class="flex items-center gap-4 p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
+<div class="bg-brand-gold/20 p-2 rounded-lg">
+<span class="material-symbols-outlined text-brand-gold">shield_lock</span>
+</div>
+<div>
+<p class="text-sm font-semibold uppercase tracking-wider text-brand-gold">Enterprise Grade Security</p>
+<p class="text-xs text-slate-400">All sessions are encrypted and monitored.</p>
+</div>
+</div>
+</div>
+<!-- Abstract Background Decoration -->
+<div class="absolute bottom-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -mb-20 -mr-20"></div>
+<div class="absolute top-0 left-0 w-48 h-48 bg-brand-gold/10 rounded-full blur-3xl -mt-20 -ml-20"></div>
+</div>
+<!-- Right Side: Login Form -->
+<div class="w-full lg:w-1/2 flex flex-col justify-center px-8 md:px-16 py-12">
+<div class="mb-10 lg:hidden">
+<img alt="Al Buqaa Logo" class="h-10 w-auto" data-alt="Al Buqaa colored logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACeZg5j97gNMcNqULBAF6BLmdYb9gdeyrfsifxAa5sKZqZ2yM_NPIyTP_xgbfGdIMbCqb27gCTM_Xlq0WMKCUboDtYmQESauXlPDOmxkXBCFqUTCgqfd8t2vQWOrsnYUV-NHVnl3MVaRtFUDocYWiq38tRguwfgFKkWhNKTYkPXCF3G-WlDNPigrV1nQYCWkEOz84NG3oTzxWxwuRrlgR_XCcLIWJAJni8EPIGgUntUqc0ATfe14tibJzREKTmYf0oG229CqD5s-NX"/>
+</div>
+<div class="mb-8">
+<h2 class="text-3xl font-bold text-slate-900 dark:text-slate-100">Welcome Back</h2>
+<p class="text-slate-500 dark:text-slate-400 mt-2">Please sign in to your administrative account</p>
+</div>
+<form class="space-y-6" id="loginForm">
+<!-- Error Message Container -->
+<div class="hidden" id="errorMessage">
+<div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-xl flex items-center gap-3 text-sm font-medium animate-pulse">
+<span class="material-symbols-outlined text-lg">error</span>
+                        Invalid Access Code. Please try again.
+                    </div>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300 block" for="email">Email Address</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">mail</span>
+</div>
+<input class="block w-full pl-11 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-slate-900 dark:text-slate-100 placeholder:text-slate-400" id="email" name="email" placeholder="admin@albuqaa.com" required="" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300 block" for="password">Access Code</label>
+<a class="text-xs font-semibold text-primary hover:text-primary/80 transition-colors" href="#">Forgot Password?</a>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">lock</span>
+</div>
+<input class="block w-full pl-11 pr-12 py-3.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-slate-900 dark:text-slate-100 placeholder:text-slate-400" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+<button class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600 transition-colors" onclick="togglePassword()" type="button">
+<span class="material-symbols-outlined text-[20px]" id="passwordIcon">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center">
+<input class="h-5 w-5 rounded border-slate-300 dark:border-slate-700 text-primary focus:ring-primary/20 bg-white dark:bg-slate-800 transition-colors cursor-pointer" id="remember" name="remember" type="checkbox"/>
+<label class="ml-3 text-sm text-slate-600 dark:text-slate-400 cursor-pointer select-none" for="remember">Remember this device for 30 days</label>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-primary/20 transition-all transform active:scale-[0.98] flex items-center justify-center gap-2" type="submit">
+<span>Log In to Portal</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</form>
+<div class="mt-10 pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+<p class="text-xs text-slate-400 dark:text-slate-500">© 2024 Al Buqaa Real Estate. All rights reserved.</p>
+<div class="flex gap-4">
+<a class="text-xs text-slate-400 hover:text-primary transition-colors" href="#">Help Center</a>
+<a class="text-xs text-slate-400 hover:text-primary transition-colors" href="#">Privacy Policy</a>
+</div>
+</div>
+</div>
+</div>
+<script>
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('errorMessage');
+        const passwordInput = document.getElementById('password');
+        const passwordIcon = document.getElementById('passwordIcon');
+
+        function togglePassword() {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.textContent = 'visibility';
+            }
+        }
+
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const accessCode = passwordInput.value;
+            const validCode = "08141a786";
+
+            if (accessCode === validCode) {
+                // Success: Redirect to admin.html
+                window.location.href = 'admin.html';
+            } else {
+                // Failure: Show error message
+                errorMessage.classList.remove('hidden');
+                // Optional: visual feedback on input
+                passwordInput.classList.add('border-red-500', 'focus:ring-red-500/20', 'focus:border-red-500');
+                passwordInput.classList.remove('border-slate-200', 'dark:border-slate-700');
+                
+                // Shake effect (optional)
+                loginForm.classList.add('animate-shake');
+                setTimeout(() => loginForm.classList.remove('animate-shake'), 500);
+            }
+        });
+
+        // Hide error when user starts typing again
+        passwordInput.addEventListener('input', () => {
+            errorMessage.classList.add('hidden');
+            passwordInput.classList.remove('border-red-500', 'focus:ring-red-500/20', 'focus:border-red-500');
+            passwordInput.classList.add('border-slate-200', 'dark:border-slate-700');
+        });
+    </script>
+<style>
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .animate-shake {
+            animation: shake 0.2s cubic-bezier(.36,.07,.19,.97) both;
+        }
+    </style>
+</body></html>

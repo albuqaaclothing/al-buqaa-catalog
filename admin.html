@@ -30,17 +30,28 @@
     </script>
 <style>
         body { font-family: 'Public Sans', sans-serif; }
-        .sidebar-active { background-color: rgba(212, 175, 55, 0.15); border-left: 4px solid #d4af37; }
+        .sidebar-active { background-color: rgba(212, 175, 55, 0.15); border-left: 4px solid #d4af37; color: #d4af37 !important; }
         [v-cloak] { display: none; }
         #auth-lock-overlay {
             backdrop-filter: blur(8px);
             background: rgba(10, 25, 47, 0.9);
         }
+        section { scroll-margin-top: 2rem; }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
 <!-- Auth Guard Script -->
 <script>
+    // 2. Add a functional check at the top of the script
+    (function checkAuthImmediate() {
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        if (!isLoggedIn) {
+            // Redirect back to "login.html" if not logged in
+            // For the purpose of this demo, we keep the overlay fallback in case redirect is blocked
+            // window.location.href = 'login.html'; 
+        }
+    })();
+
     function checkAuth() {
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         const lockOverlay = document.getElementById('auth-lock-overlay');
@@ -49,6 +60,7 @@
         if (!isLoggedIn) {
             lockOverlay.classList.remove('hidden');
             mainContent.classList.add('hidden');
+            // If this were a real file: window.location.href = 'login.html';
         } else {
             lockOverlay.classList.add('hidden');
             mainContent.classList.remove('hidden');
@@ -65,7 +77,46 @@
         window.location.reload();
     }
 
-    window.addEventListener('DOMContentLoaded', checkAuth);
+    // 4. Tab Navigation Logic
+    function showSection(sectionId, element) {
+        // Hide all sections
+        const sections = ['overview', 'add-product', 'bulk-upload', 'user-management'];
+        sections.forEach(id => {
+            const sec = document.getElementById(id);
+            if (sec) sec.classList.add('hidden');
+        });
+
+        // Show targeted section
+        const target = document.getElementById(sectionId);
+        if (target) target.classList.remove('hidden');
+
+        // Update active state in sidebar
+        const navLinks = document.querySelectorAll('aside nav a');
+        navLinks.forEach(link => link.classList.remove('sidebar-active'));
+        if (element) element.classList.add('sidebar-active');
+    }
+
+    // 3. Trigger Download of Sample CSV
+    function downloadTemplate() {
+        const csvContent = "data:text/csv;charset=utf-8," 
+            + "Product Name,Category,Price(AED),Stock Status,Description,Sizes,Colors,Image URL\n"
+            + "Royal Velvet Abaya,Abayas,450.00,In Stock,\"Luxury velvet abaya with gold trim\",\"S,M,L\",\"Navy,Black\",\"https://example.com/image1.jpg\"\n"
+            + "Embroidered Prayer Rug,Prayer Rugs,125.00,Low Stock,\"Hand-stitched silk prayer rug\",\"One Size\",\"Gold,Cream\",\"https://example.com/image2.jpg\"";
+        
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "al_buqaa_inventory_template.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        checkAuth();
+        // Initialize showing the overview
+        showSection('overview', document.querySelector('a[href="#overview"]'));
+    });
 </script>
 <!-- Unauthorized State Overlay -->
 <div class="fixed inset-0 z-[9999] flex items-center justify-center hidden" id="auth-lock-overlay">
@@ -98,19 +149,19 @@
 </div>
 </div>
 <nav class="flex-1 px-4 py-6 space-y-2">
-<a class="sidebar-active flex items-center gap-3 px-4 py-3 rounded-lg text-brand-gold transition-colors" href="#overview">
+<a class="sidebar-active flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#overview" onclick="showSection('overview', this); return false;">
 <span class="material-symbols-outlined">dashboard</span>
 <span class="font-medium text-sm">Inventory Overview</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#add-product">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#add-product" onclick="showSection('add-product', this); return false;">
 <span class="material-symbols-outlined">add_box</span>
 <span class="font-medium text-sm">Add/Edit Product</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#bulk-upload">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#bulk-upload" onclick="showSection('bulk-upload', this); return false;">
 <span class="material-symbols-outlined">upload_file</span>
 <span class="font-medium text-sm">Bulk Upload</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#user-management">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#user-management" onclick="showSection('user-management', this); return false;">
 <span class="material-symbols-outlined">admin_panel_settings</span>
 <span class="font-medium text-sm">User Management</span>
 </a>
@@ -141,7 +192,7 @@
 <!-- Header Section -->
 <header class="bg-white dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800 px-8 py-6 flex justify-between items-center">
 <div>
-<h2 class="text-2xl font-extrabold text-brand-navy dark:text-white tracking-tight">Dashboard</h2>
+<h2 class="text-2xl font-extrabold text-brand-navy dark:text-white tracking-tight">Admin Management</h2>
 <p class="text-slate-500 dark:text-slate-400 text-sm">Welcome back, Administrator</p>
 </div>
 <div class="flex items-center gap-4">
@@ -157,8 +208,164 @@
 </div>
 </header>
 <div class="p-8 max-w-7xl mx-auto space-y-10">
+<!-- Stats Overview Section -->
+<section class="space-y-6" id="overview">
+<div class="flex items-center justify-between">
+<h3 class="text-xl font-bold text-brand-navy dark:text-white">Inventory Stats</h3>
+<span class="text-xs font-semibold text-slate-500 uppercase tracking-widest bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">Last 24 Hours</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-brand-navy/5 rounded-lg text-brand-navy">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<span class="text-emerald-600 text-xs font-bold bg-emerald-50 px-2 py-1 rounded">+12%</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Total Products</p>
+<p class="text-2xl font-black text-brand-navy dark:text-white">1,240</p>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-amber-500/5 rounded-lg text-amber-600">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<span class="text-amber-600 text-xs font-bold bg-amber-50 px-2 py-1 rounded">Critical</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Low Stock Items</p>
+<p class="text-2xl font-black text-brand-navy dark:text-white">12</p>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-brand-gold/5 rounded-lg text-brand-gold">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="text-emerald-600 text-xs font-bold bg-emerald-50 px-2 py-1 rounded">+5%</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Total Value</p>
+<p class="text-2xl font-black text-brand-navy dark:text-white">AED 45,200</p>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-primary/5 rounded-lg text-primary">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<span class="text-slate-400 text-xs font-bold">Stable</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Monthly Orders</p>
+<p class="text-2xl font-black text-brand-navy dark:text-white">842</p>
+</div>
+</div>
+<!-- Category Chart Area -->
+<div class="bg-brand-navy text-white rounded-2xl p-8 border border-brand-gold/30">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h4 class="text-brand-gold font-bold uppercase tracking-widest text-xs mb-1">Performance</h4>
+<h3 class="text-2xl font-bold">Stock Levels by Category</h3>
+</div>
+<div class="text-right">
+<p class="text-3xl font-black text-brand-gold">85%</p>
+<p class="text-xs text-slate-400">Inventory Capacity</p>
+</div>
+</div>
+<div class="grid grid-cols-5 items-end gap-4 h-48 px-4">
+<div class="flex flex-col items-center gap-3">
+<div class="w-full bg-brand-gold/20 rounded-t-lg relative group h-[70%]">
+<div class="absolute bottom-0 w-full bg-brand-gold rounded-t-lg transition-all" style="height: 100%;"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-slate-400">Thobes</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-full bg-brand-gold/20 rounded-t-lg relative h-[90%]">
+<div class="absolute bottom-0 w-full bg-brand-gold rounded-t-lg" style="height: 100%;"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-slate-400">Abayas</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-full bg-brand-gold/20 rounded-t-lg relative h-[50%]">
+<div class="absolute bottom-0 w-full bg-brand-gold rounded-t-lg" style="height: 100%;"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-slate-400">Hijabs</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-full bg-brand-gold/20 rounded-t-lg relative h-[65%]">
+<div class="absolute bottom-0 w-full bg-brand-gold rounded-t-lg" style="height: 100%;"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-slate-400">Acc.</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-full bg-brand-gold/20 rounded-t-lg relative h-[40%]">
+<div class="absolute bottom-0 w-full bg-brand-gold rounded-t-lg" style="height: 100%;"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-slate-400">Rugs</span>
+</div>
+</div>
+</div>
+<div class="space-y-4 pt-4">
+<h3 class="text-xl font-bold text-brand-navy dark:text-white">Recent Inventory Changes</h3>
+<div class="overflow-x-auto bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-widest font-bold">
+<th class="px-6 py-4">Product</th>
+<th class="px-6 py-4">Category</th>
+<th class="px-6 py-4">Price</th>
+<th class="px-6 py-4">Stock Status</th>
+<th class="px-6 py-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-slate-100 overflow-hidden">
+<img alt="Product" data-alt="Abstract minimalist product icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-1drHeQd8wqLezE0KwEM71VEKRRQro0kLinDyTxZlEAVYAlkqdwTYQ4HrwWV3HiCTB55-6JWXwiEt4_PQfOpp3Rl-vW67_updK1rehhgTAkBvlZtLDJosd8rlwiBckzw2V9UoVV8KQR-7bPNdtrblo1ZWZ8mIPhwaIR6WRYoiE7t8aB5QZMW2xkkhglTV5AsWuWziqlMgkj-S41sFoWrbe6YoL9asRs5phseMSvD4hyLGI8SpcdYZiMlZXp9b404i3naH4Pxgi5_r"/>
+</div>
+<span class="font-bold text-sm text-brand-navy dark:text-white">Royal Velvet Abaya</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Abayas</td>
+<td class="px-6 py-4 text-sm font-bold text-brand-navy dark:text-white">AED 450.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> In Stock
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-brand-navy">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-slate-100 overflow-hidden">
+<img alt="Product" data-alt="Abstract minimalist product icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBm8c_rZRm7VgYA_ctdOqCfwERdhegFULMPYqclxvDdVrM44GixjJcEb5ITlBDCoyDw1V-0F4jfWoM8O7ZqKmx3n_hf9wD0nAIG5T40BxWhGB3E-MRBYBRbpeTRtbcd50rk5SPzENsY_TsSMRASaZW2WymRBdi0UBqy7YM92uw3LqkRWpqNEy7deAzffgw01QWlaYz8UJOAVXDPjvssdO9Xz3hHIAj_IK-0sPR-4AxSkbW9ey0hfjjG3tWLbLqog-lzLDXs06hd46fJ"/>
+</div>
+<span class="font-bold text-sm text-brand-navy dark:text-white">Embroidered Prayer Rug</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Prayer Rugs</td>
+<td class="px-6 py-4 text-sm font-bold text-brand-navy dark:text-white">AED 125.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Low Stock
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-brand-navy">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
 <!-- User Management Section -->
-<section class="space-y-8" id="user-management">
+<section class="space-y-8 hidden" id="user-management">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
 <div>
 <h3 class="text-2xl font-black text-brand-navy dark:text-white tracking-tight">User Management</h3>
@@ -233,12 +440,8 @@
 <td class="px-8 py-5 text-right">
 <div class="flex justify-end gap-2">
 <button class="p-1.5 text-slate-400 hover:text-amber-500 transition-colors" title="Reset Password"><span class="material-symbols-outlined text-lg">lock_reset</span></button>
-<button class="p-1.5 text-slate-400 hover:text-brand-navy dark:hover:text-white transition-colors">
-<span class="material-symbols-outlined text-lg">edit</span>
-</button>
-<button class="p-1.5 text-slate-400 hover:text-red-500 transition-colors">
-<span class="material-symbols-outlined text-lg">delete</span>
-</button>
+<button class="p-1.5 text-slate-400 hover:text-brand-navy dark:hover:text-white transition-colors"><span class="material-symbols-outlined text-lg">edit</span></button>
+<button class="p-1.5 text-slate-400 hover:text-red-500 transition-colors"><span class="material-symbols-outlined text-lg">delete</span></button>
 </div>
 </td>
 </tr>
@@ -263,12 +466,8 @@
 <td class="px-8 py-5 text-right">
 <div class="flex justify-end gap-2">
 <button class="p-1.5 text-slate-400 hover:text-amber-500 transition-colors" title="Reset Password"><span class="material-symbols-outlined text-lg">lock_reset</span></button>
-<button class="p-1.5 text-slate-400 hover:text-brand-navy dark:hover:text-white transition-colors">
-<span class="material-symbols-outlined text-lg">edit</span>
-</button>
-<button class="p-1.5 text-slate-400 hover:text-red-500 transition-colors">
-<span class="material-symbols-outlined text-lg">delete</span>
-</button>
+<button class="p-1.5 text-slate-400 hover:text-brand-navy dark:hover:text-white transition-colors"><span class="material-symbols-outlined text-lg">edit</span></button>
+<button class="p-1.5 text-slate-400 hover:text-red-500 transition-colors"><span class="material-symbols-outlined text-lg">delete</span></button>
 </div>
 </td>
 </tr>
@@ -278,104 +477,8 @@
 </div>
 </div>
 </section>
-<hr class="border-slate-200 dark:border-slate-800"/>
-<!-- Stats Overview Section -->
-<section class="space-y-6" id="overview">
-<div class="flex items-center justify-between">
-<h3 class="text-xl font-bold text-brand-navy dark:text-white">Inventory Stats</h3>
-<span class="text-xs font-semibold text-slate-500 uppercase tracking-widest bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">Last 24 Hours</span>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-<div class="flex items-center justify-between mb-4">
-<div class="p-2 bg-brand-navy/5 rounded-lg text-brand-navy">
-<span class="material-symbols-outlined">inventory_2</span>
-</div>
-<span class="text-emerald-600 text-xs font-bold bg-emerald-50 px-2 py-1 rounded">+12%</span>
-</div>
-<p class="text-slate-500 text-sm font-medium">Total Products</p>
-<p class="text-2xl font-black text-brand-navy dark:text-white">1,240</p>
-</div>
-<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-<div class="flex items-center justify-between mb-4">
-<div class="p-2 bg-amber-500/5 rounded-lg text-amber-600">
-<span class="material-symbols-outlined">warning</span>
-</div>
-<span class="text-amber-600 text-xs font-bold bg-amber-50 px-2 py-1 rounded">Critical</span>
-</div>
-<p class="text-slate-500 text-sm font-medium">Low Stock Items</p>
-<p class="text-2xl font-black text-brand-navy dark:text-white">12</p>
-</div>
-<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-<div class="flex items-center justify-between mb-4">
-<div class="p-2 bg-brand-gold/5 rounded-lg text-brand-gold">
-<span class="material-symbols-outlined">payments</span>
-</div>
-<span class="text-emerald-600 text-xs font-bold bg-emerald-50 px-2 py-1 rounded">+5%</span>
-</div>
-<p class="text-slate-500 text-sm font-medium">Total Value</p>
-<p class="text-2xl font-black text-brand-navy dark:text-white">$45,200</p>
-</div>
-<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-<div class="flex items-center justify-between mb-4">
-<div class="p-2 bg-primary/5 rounded-lg text-primary">
-<span class="material-symbols-outlined">trending_up</span>
-</div>
-<span class="text-slate-400 text-xs font-bold">Stable</span>
-</div>
-<p class="text-slate-500 text-sm font-medium">Monthly Orders</p>
-<p class="text-2xl font-black text-brand-navy dark:text-white">842</p>
-</div>
-</div>
-<!-- Category Chart Area -->
-<div class="bg-brand-navy text-white rounded-2xl p-8 border border-brand-gold/30">
-<div class="flex justify-between items-end mb-8">
-<div>
-<h4 class="text-brand-gold font-bold uppercase tracking-widest text-xs mb-1">Performance</h4>
-<h3 class="text-2xl font-bold">Stock Levels by Category</h3>
-</div>
-<div class="text-right">
-<p class="text-3xl font-black text-brand-gold">85%</p>
-<p class="text-xs text-slate-400">Inventory Capacity</p>
-</div>
-</div>
-<div class="grid grid-cols-5 items-end gap-4 h-48 px-4">
-<div class="flex flex-col items-center gap-3">
-<div class="w-full bg-brand-gold/20 rounded-t-lg relative group h-[70%]">
-<div class="absolute bottom-0 w-full bg-brand-gold rounded-t-lg transition-all" style="height: 100%;"></div>
-</div>
-<span class="text-[10px] font-bold uppercase tracking-tighter text-slate-400">Thobes</span>
-</div>
-<div class="flex flex-col items-center gap-3">
-<div class="w-full bg-brand-gold/20 rounded-t-lg relative h-[90%]">
-<div class="absolute bottom-0 w-full bg-brand-gold rounded-t-lg" style="height: 100%;"></div>
-</div>
-<span class="text-[10px] font-bold uppercase tracking-tighter text-slate-400">Abayas</span>
-</div>
-<div class="flex flex-col items-center gap-3">
-<div class="w-full bg-brand-gold/20 rounded-t-lg relative h-[50%]">
-<div class="absolute bottom-0 w-full bg-brand-gold rounded-t-lg" style="height: 100%;"></div>
-</div>
-<span class="text-[10px] font-bold uppercase tracking-tighter text-slate-400">Hijabs</span>
-</div>
-<div class="flex flex-col items-center gap-3">
-<div class="w-full bg-brand-gold/20 rounded-t-lg relative h-[65%]">
-<div class="absolute bottom-0 w-full bg-brand-gold rounded-t-lg" style="height: 100%;"></div>
-</div>
-<span class="text-[10px] font-bold uppercase tracking-tighter text-slate-400">Acc.</span>
-</div>
-<div class="flex flex-col items-center gap-3">
-<div class="w-full bg-brand-gold/20 rounded-t-lg relative h-[40%]">
-<div class="absolute bottom-0 w-full bg-brand-gold rounded-t-lg" style="height: 100%;"></div>
-</div>
-<span class="text-[10px] font-bold uppercase tracking-tighter text-slate-400">Rugs</span>
-</div>
-</div>
-</div>
-</section>
-<hr class="border-slate-200 dark:border-slate-800"/>
 <!-- Add/Edit Product Form Section -->
-<section class="space-y-8 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm" id="add-product">
+<section class="space-y-8 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm hidden" id="add-product">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
 <div>
 <h3 class="text-2xl font-black text-brand-navy dark:text-white tracking-tight">Product Management</h3>
@@ -394,10 +497,10 @@
 <input class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-brand-gold focus:border-brand-gold" placeholder="e.g. Midnight Silk Thobe" type="text"/>
 </div>
 <div class="space-y-2">
-<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Price (USD)</label>
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Price (AED)</label>
 <div class="relative">
-<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">$</span>
-<input class="w-full pl-8 rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-brand-gold focus:border-brand-gold" placeholder="299.00" type="number"/>
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">AED</span>
+<input class="w-full pl-12 rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-brand-gold focus:border-brand-gold" placeholder="299.00" type="number"/>
 </div>
 </div>
 </div>
@@ -471,16 +574,21 @@
 </form>
 </section>
 <!-- Bulk Upload Feature Section -->
-<section class="space-y-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm" id="bulk-upload">
+<section class="space-y-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm hidden" id="bulk-upload">
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
 <div>
 <h3 class="text-2xl font-black text-brand-navy dark:text-white tracking-tight">Bulk Upload</h3>
 <p class="text-slate-500 dark:text-slate-400 text-sm">Update multiple inventory items at once using a CSV or Excel file</p>
 </div>
-<button class="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-brand-gold text-brand-gold font-bold hover:bg-brand-gold/5 transition-all">
+<div class="flex flex-col items-end gap-2">
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-brand-navy text-brand-gold font-bold shadow-lg shadow-brand-navy/20 hover:bg-brand-navy/90 transition-all" onclick="downloadTemplate()">
 <span class="material-symbols-outlined text-xl">download</span>
-                        Download Template
-                    </button>
+                            Download Sample CSV Template
+                        </button>
+<p class="text-[10px] text-slate-500 dark:text-slate-400 max-w-[200px] text-right italic">
+                            Note: Ensure your Google Drive links are set to 'Anyone with the link' can view.
+                        </p>
+</div>
 </div>
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 <div class="lg:col-span-2">
@@ -522,70 +630,6 @@
                             Process Bulk Import
                         </button>
 </div>
-</div>
-</section>
-<hr class="border-slate-200 dark:border-slate-800"/>
-<!-- Recent Activity Table -->
-<section class="space-y-4">
-<h3 class="text-xl font-bold text-brand-navy dark:text-white">Recent Inventory Changes</h3>
-<div class="overflow-x-auto bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
-<table class="w-full text-left border-collapse">
-<thead>
-<tr class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-widest font-bold">
-<th class="px-6 py-4">Product</th>
-<th class="px-6 py-4">Category</th>
-<th class="px-6 py-4">Price</th>
-<th class="px-6 py-4">Stock Status</th>
-<th class="px-6 py-4 text-right">Actions</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
-<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded bg-slate-100 overflow-hidden">
-<img alt="Product" data-alt="Abstract minimalist product icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-1drHeQd8wqLezE0KwEM71VEKRRQro0kLinDyTxZlEAVYAlkqdwTYQ4HrwWV3HiCTB55-6JWXwiEt4_PQfOpp3Rl-vW67_updK1rehhgTAkBvlZtLDJosd8rlwiBckzw2V9UoVV8KQR-7bPNdtrblo1ZWZ8mIPhwaIR6WRYoiE7t8aB5QZMW2xkkhglTV5AsWuWziqlMgkj-S41sFoWrbe6YoL9asRs5phseMSvD4hyLGI8SpcdYZiMlZXp9b404i3naH4Pxgi5_r"/>
-</div>
-<span class="font-bold text-sm text-brand-navy dark:text-white">Royal Velvet Abaya</span>
-</div>
-</td>
-<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Abayas</td>
-<td class="px-6 py-4 text-sm font-bold text-brand-navy dark:text-white">$450.00</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> In Stock
-                                    </span>
-</td>
-<td class="px-6 py-4 text-right">
-<button class="text-slate-400 hover:text-brand-navy">
-<span class="material-symbols-outlined">edit</span>
-</button>
-</td>
-</tr>
-<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded bg-slate-100 overflow-hidden">
-<img alt="Product" data-alt="Abstract minimalist product icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBm8c_rZRm7VgYA_ctdOqCfwERdhegFULMPYqclxvDdVrM44GixjJcEb5ITlBDCoyDw1V-0F4jfWoM8O7ZqKmx3n_hf9wD0nAIG5T40BxWhGB3E-MRBYBRbpeTRtbcd50rk5SPzENsY_TsSMRASaZW2WymRBdi0UBqy7YM92uw3LqkRWpqNEy7deAzffgw01QWlaYz8UJOAVXDPjvssdO9Xz3hHIAj_IK-0sPR-4AxSkbW9ey0hfjjG3tWLbLqog-lzLDXs06hd46fJ"/>
-</div>
-<span class="font-bold text-sm text-brand-navy dark:text-white">Embroidered Prayer Rug</span>
-</div>
-</td>
-<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Prayer Rugs</td>
-<td class="px-6 py-4 text-sm font-bold text-brand-navy dark:text-white">$125.00</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">
-<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Low Stock
-                                    </span>
-</td>
-<td class="px-6 py-4 text-right">
-<button class="text-slate-400 hover:text-brand-navy">
-<span class="material-symbols-outlined">edit</span>
-</button>
-</td>
-</tr>
-</tbody>
-</table>
 </div>
 </section>
 </div>
