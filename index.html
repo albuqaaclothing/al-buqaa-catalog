@@ -194,8 +194,7 @@
         </div>
 </div>
 </footer>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
+<script>    document.addEventListener('DOMContentLoaded', function() {
         const LOCAL_STORAGE_KEY = 'al_buqaa_products';
         const WHATSAPP_NUMBER = '+971561573426';
         const productGrid = document.getElementById('product-grid');
@@ -219,26 +218,32 @@
 
         function renderProducts(products) {
             productGrid.innerHTML = '';
+            const fallbackImage = 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop';
             
             products.forEach(product => {
+                let imageUrl = product.image || fallbackImage;
+                
+                // Check for relative path handling
+                if (typeof imageUrl === 'string' && imageUrl.startsWith('images/') && !imageUrl.startsWith('http')) {
+                    imageUrl = './' + imageUrl;
+                }
+
+                // Debug log for path verification
+                console.log(`[Debug] Attempting to load image for "${product.name}" from: ${imageUrl}`);
+
                 const productHtml = `
                     <div class="group bg-slate-900 rounded-2xl overflow-hidden border border-white/5 hover:border-brand-gold/50 transition-all">
-                        <div class="aspect-[4/5] relative overflow-hidden bg-slate-800">
-                            <img src="${product.image || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop'}" 
-                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
-                                 alt="${product.name}"
-                                 onerror="this.src='https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop'">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-lg font-bold text-white mb-2">${product.name}</h3>
-                            <p class="text-brand-gold font-bold mb-4">AED ${product.price}</p>
-                            <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I'm%20interested%20in%20the%20${encodeURIComponent(product.name)}" 
-                               target="_blank"
-                               class="w-full py-3 bg-white/5 hover:bg-brand-gold hover:text-slate-900 text-white text-center rounded-xl font-bold transition-all block">
+<div class="aspect-[4/5] relative overflow-hidden bg-slate-800">
+<img alt="${product.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.onerror=null;this.src='${fallbackImage}';" src="${imageUrl}"/>
+</div>
+<div class="p-6">
+<h3 class="text-lg font-bold text-white mb-2">${product.name}</h3>
+<p class="text-brand-gold font-bold mb-4">AED ${product.price}</p>
+<a class="w-full py-3 bg-white/5 hover:bg-brand-gold hover:text-slate-900 text-white text-center rounded-xl font-bold transition-all block" href="https://wa.me/${WHATSAPP_NUMBER}?text=I'm%20interested%20in%20the%20${encodeURIComponent(product.name)}" target="_blank">
                                Order on WhatsApp
                             </a>
-                        </div>
-                    </div>
+</div>
+</div>
                 `;
                 productGrid.insertAdjacentHTML('beforeend', productHtml);
             });
@@ -253,6 +258,5 @@
                 fetchProducts();
             }
         });
-    });
-</script>
+    });</script>
 </body></html>
