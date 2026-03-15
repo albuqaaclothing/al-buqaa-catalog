@@ -31,10 +31,59 @@
 <style>
         body { font-family: 'Public Sans', sans-serif; }
         .sidebar-active { background-color: rgba(212, 175, 55, 0.15); border-left: 4px solid #d4af37; }
+        [v-cloak] { display: none; }
+        #auth-lock-overlay {
+            backdrop-filter: blur(8px);
+            background: rgba(10, 25, 47, 0.9);
+        }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
-<div class="flex min-h-screen">
+<!-- Auth Guard Script -->
+<script>
+    function checkAuth() {
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const lockOverlay = document.getElementById('auth-lock-overlay');
+        const mainContent = document.getElementById('main-wrapper');
+        
+        if (!isLoggedIn) {
+            lockOverlay.classList.remove('hidden');
+            mainContent.classList.add('hidden');
+        } else {
+            lockOverlay.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+        }
+    }
+
+    function handleLogout() {
+        localStorage.removeItem('isLoggedIn');
+        window.location.reload();
+    }
+
+    function handleLoginSim() {
+        localStorage.setItem('isLoggedIn', 'true');
+        window.location.reload();
+    }
+
+    window.addEventListener('DOMContentLoaded', checkAuth);
+</script>
+<!-- Unauthorized State Overlay -->
+<div class="fixed inset-0 z-[9999] flex items-center justify-center hidden" id="auth-lock-overlay">
+<div class="bg-white dark:bg-slate-900 p-10 rounded-2xl shadow-2xl border border-brand-gold/20 max-w-md w-full text-center space-y-6">
+<div class="w-20 h-20 bg-brand-gold/10 rounded-full flex items-center justify-center mx-auto mb-4">
+<span class="material-symbols-outlined text-4xl text-brand-gold">lock</span>
+</div>
+<div class="space-y-2">
+<h2 class="text-2xl font-black text-brand-navy dark:text-white">Unauthorized Access</h2>
+<p class="text-slate-500 dark:text-slate-400">Please sign in to access the Al Buqaa Admin Portal.</p>
+</div>
+<button class="w-full py-4 bg-brand-navy text-brand-gold rounded-xl font-bold hover:bg-brand-navy/90 transition-all shadow-lg shadow-brand-navy/20" onclick="handleLoginSim()">
+            Sign In as Administrator
+        </button>
+<p class="text-xs text-slate-400">Note: This is a conceptual auth check simulation.</p>
+</div>
+</div>
+<div class="flex min-h-screen" id="main-wrapper">
 <!-- Sidebar Navigation -->
 <aside class="w-72 bg-brand-navy text-white flex flex-col sticky top-0 h-screen border-r border-brand-gold/20">
 <div class="p-6 border-b border-brand-gold/10">
@@ -80,10 +129,10 @@
 <span class="material-symbols-outlined text-xl">settings</span>
 <span>Settings</span>
 </a>
-<a class="flex items-center gap-3 px-4 py-2 text-slate-400 hover:text-white text-sm transition-colors" href="#">
+<button class="flex items-center gap-3 px-4 py-2 text-slate-400 hover:text-red-400 text-sm transition-colors w-full text-left" onclick="handleLogout()">
 <span class="material-symbols-outlined text-xl">logout</span>
 <span>Sign Out</span>
-</a>
+</button>
 </div>
 </div>
 </aside>
@@ -99,9 +148,12 @@
 <button class="p-2 text-slate-400 hover:text-brand-navy dark:hover:text-white">
 <span class="material-symbols-outlined">notifications</span>
 </button>
+<button class="group flex items-center gap-3 pl-2 pr-4 py-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" onclick="handleLogout()">
 <div class="h-10 w-10 rounded-full bg-brand-navy border-2 border-brand-gold flex items-center justify-center text-brand-gold font-bold">
-                    JD
-                </div>
+                        JD
+                    </div>
+<span class="text-xs font-bold text-slate-500 group-hover:text-brand-navy dark:group-hover:text-white hidden md:block">Sign Out</span>
+</button>
 </div>
 </header>
 <div class="p-8 max-w-7xl mx-auto space-y-10">
@@ -180,7 +232,8 @@
 </td>
 <td class="px-8 py-5 text-right">
 <div class="flex justify-end gap-2">
-<button class="p-1.5 text-slate-400 hover:text-amber-500 transition-colors" title="Reset Password"><span class="material-symbols-outlined text-lg">lock_reset</span></button><button class="p-1.5 text-slate-400 hover:text-brand-navy dark:hover:text-white transition-colors">
+<button class="p-1.5 text-slate-400 hover:text-amber-500 transition-colors" title="Reset Password"><span class="material-symbols-outlined text-lg">lock_reset</span></button>
+<button class="p-1.5 text-slate-400 hover:text-brand-navy dark:hover:text-white transition-colors">
 <span class="material-symbols-outlined text-lg">edit</span>
 </button>
 <button class="p-1.5 text-slate-400 hover:text-red-500 transition-colors">
@@ -209,7 +262,8 @@
 </td>
 <td class="px-8 py-5 text-right">
 <div class="flex justify-end gap-2">
-<button class="p-1.5 text-slate-400 hover:text-amber-500 transition-colors" title="Reset Password"><span class="material-symbols-outlined text-lg">lock_reset</span></button><button class="p-1.5 text-slate-400 hover:text-brand-navy dark:hover:text-white transition-colors">
+<button class="p-1.5 text-slate-400 hover:text-amber-500 transition-colors" title="Reset Password"><span class="material-symbols-outlined text-lg">lock_reset</span></button>
+<button class="p-1.5 text-slate-400 hover:text-brand-navy dark:hover:text-white transition-colors">
 <span class="material-symbols-outlined text-lg">edit</span>
 </button>
 <button class="p-1.5 text-slate-400 hover:text-red-500 transition-colors">
