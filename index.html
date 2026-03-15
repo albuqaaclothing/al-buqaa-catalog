@@ -1,123 +1,258 @@
-<html class="scroll-smooth" lang="en"><head></head><body class="antialiased overflow-x-hidden">```html
-
-
-
+<html class="scroll-smooth" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Al Buqaa | Elevate Your Style</title>
 <!-- Tailwind CSS CDN -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <style data-purpose="custom-theme">
-    :root {
-      --brand-navy: #0f172a; /* Deep Navy from logo background */
-      --brand-gold: #fbbf24; /* Gold/Yellow from logo text */
-    }
-    body {
-      background-color: #020617; /* Darker background for premium feel */
-      color: #f8fafc;
-      font-family: 'Inter', sans-serif;
-    }
-    .bg-brand-navy { background-color: var(--brand-navy); }
-    .text-brand-gold { color: var(--brand-gold); }
-    .border-brand-gold { border-color: var(--brand-gold); }
-    .bg-brand-gold { background-color: var(--brand-gold); }
-    
-    /* Custom scrollbar for premium look */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #020617; }
-    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--brand-gold); }
+        :root {
+          --brand-navy: #0f172a; /* Deep Navy from logo background */
+          --brand-gold: #fbbf24; /* Gold/Yellow from logo text */
+        }
+        body {
+          background-color: #020617; /* Darker background for premium feel */
+          color: #f8fafc;
+          font-family: 'Inter', sans-serif;
+        }
+        .bg-brand-navy { background-color: var(--brand-navy); }
+        .text-brand-gold { color: var(--brand-gold); }
+        .border-brand-gold { border-color: var(--brand-gold); }
+        .bg-brand-gold { background-color: var(--brand-gold); }
+        
+        /* Custom scrollbar for premium look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--brand-gold); }
 
-    .size-btn.active {
-      border-color: var(--brand-gold);
-      background-color: var(--brand-gold);
-      color: #000;
-    }
-  </style>
+        .size-btn.active {
+          border-color: var(--brand-gold);
+          background-color: var(--brand-gold);
+          color: #000;
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
 <!-- BEGIN: Navigation -->
 <nav class="fixed top-0 w-full z-50 bg-brand-navy/90 backdrop-blur-md border-b border-white/10" data-purpose="main-nav">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 <div class="flex justify-between items-center h-20">
 <div class="flex items-center gap-4">
-<img alt="Al Buqaa Logo" class="h-12 w-12 object-contain rounded" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAnEAAAJxCAYAAAAtjeQ4AAAACXBIWXMAABJ0AAASdAHeZh94AAAE8WlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSfvu78nIGlkPSdXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQnPz4KPHg6eG1wbWV0YSB4bWxuczp4PSdhZG9iZTpuczptZXRhLyc+CjxyZGY6UkRGIHhtbG5zOnJkZj0naHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyc+CgogPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9JycKICB4bWxuczpBdHRyaWI9J2h0dHA6Ly9ucy5hdHRyaWJ1dGlvbi5jb20vYWRzLzEuMC8nPgogIDxBdHRyaWI6QWRzPgogICA8cmRmOlNlcT4KICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0nUmVzb3VyY2UnPgogICAgIDxBdHRyaWI6Q3JlYXRlZD4yMDI1LTA2LTA1PC9BdHRyaWI6Q3JlYXRlZD4KICAgICA8QXR0cmliOkV4dExtPjhmOTM4NWVjLWM2YzAtNDI5Yi05MjM5LWQ5ODc3NzFjZjRlYzwvQXR0cmliOkV4dExtPgogICAgIDxBdHRyaWI6RmJJZD41MjUyNjU5MTQxNzk1ODA8L0F0dHJpYjpGYklkPgogICAgIDxBdHRyaWI6VG91Y2hUeXBlPjI8L0F0dHJpYjpUb3VjaFR5cGU+CiAgICA8L3JkZjpsaT4KICAgPC9yZGY6U2VxPgogIDwvQXR0cmliOkFkcz4KIDwvcmRmOkRlc2NyaXB0aW9uPgoKIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PScnCiAgeG1sbnM6ZGM9J2h0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvJz4KICA8ZGM6dGl0bGU+CiAgIDxyZGY6QWx0PgogICAgPHJkZjpsaSB4bWw6bGFuZz0neC1kZWZhdWx0Jz5BbCBCdXFhYSBMb2dvIC0gMTwvcmRmOmxpPgogICA8L3JkZjpBbHQ+CiAgPC9kYzp0aXRsZT4KIDwvcmRmOkRlc2NyaXB0aW9uPgoKIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PScnCiAgeG1sbnM6cGRmPSdodHRwOi8vbnMuYWRvYmUuY29tL3BkZi8xLjMvJz4KICA8cGRmOkF1dGhvcj5Bc2lmIFNoYWlraCBNb2hhbW1lZDwvcGRmOkF1dGhvcj4KIDwvcmRmOkRlc2NyaXB0aW9uPgoKIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PScnCiAgeG1sbnM6eG1wPSdodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvJz4KICA8eG1wOkNyZWF0b3JUb29sPkNhbnZhIChSZW5kZXJlcikgZG9jPURBR1YwbmFrQ21vIHVzZXI9VUFGMG45TElaUW8gYnJhbmQ9QkFGMG4tV1R1blEgdGVtcGxhdGU9V2hpdGUgJmFtcDsgQmxhY2sgTWluaW1hbGlzdCBMb2dvIERpc3RybyBGYXNoaW9uPC94bXA6Q3JlYXRvclRvb2w+CiA8L3JkZjpEZXNjcmlwdGlvbj4KPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KPD94cGFja2V0IGVuZD0ncic/Piy75y0AAITCSURBVHic7NaxDcAgAMCw0hOYGPn/SXpDJxTJviBjxlz7PAAApLy3AwAA+M/EAQAEmTgAgCATBwAQZOIAAIJMHABAkIkDAAgycQAAQSYOACDIxAEABJk4AIAgEwcAEGTiAACCTBwAQJCJAwAIMnEAAEEmDgAgyMQBAASZOACAIBMHABBk4gAAgkwcAECQiQMACDJxAABBJg4AIMjEAQAEmTgAgCATBwAQZOIAAIJMHABAkIkDAAgycQAAQSYOACDIxAEABJk4AIAgEwcAEGTiAACCTBwAQJCJAwAIMnEAAEEmDgAgyMQBAASZOACAIBMHABBk4gAAgkwcAECQiQMACDJxAABBJg4AIMjEAQAEmTgAgCATBwAQZOIAAIJMHABAkIkDAAgycQAAQSYOACDIxAEABJk4AIAgEwcAEGTiAACCTBwAQJCJAwAIMnEAAEEmDgAgyMQBAASZOACAIBMHABBk4gAAgkwcAECQiQMACDJxAABBJg4AIMjEAQAEmTgAgCATBwAQZOIAAIJMHABAkIkDAAgycQAAQSYOACDIxAEABJk4AIAgEwcAEGTiAACCTBwAQJCJAwAIMnEAAEEmDgAgyMQBAASZOACAIBMHABBk4gAAgkwcAECQiQMACDJxAABBJg4AIMjEAQAEmTgAgCATBwAQZOIAAIJMHABAkIkDAAgycQAAQSYOACDIxAEABJk4AIAgEwcAEGTiAACCTBwAQJCJAwAIMnEAAEEmDgAgyMQBAASZOACAIBMHABBk4gAAgkwcAECQiQMACDJxAABBJg4AIMjEAQAEmTgAgCATBwAQ9AEAAP//7N13VFRHwwbwZ5feBJUmoAK22FCavSGoKCqiIiKIokbf2KKJicZYYokmpmiixhq7UWPHij1Ywd5QERS7dJYmbXe/P/wkEmB3wV1g8fmdk3N25965d9bA2YeZOzMMcURERERqiCGOiIiISA0xxBERERGpIYY4IiIiIjXEEEdERESkhhjiiIiIiNQQQxwRERGRGmKIIyIiIlJDDHFEREREaoghjoiIiEgNMcQRERERqSGGOCIiIiI1xBBHREREpIYY4oiIiIjUEEMcERERkRpiiCMiIiJSQwxxRERERGqIIY6IiIhIDTHEEREREakhhjgiIiIiNcQQR0RERKSGGOKIiIiI1BBDHBEREZEaYogjIiIiUkMMcURERERqiCGOiIiISA0xxBERERGpIYY4IiIiIjXEEEdERESkhhjiiIiIiNQQQxwRERGRGmKIIyIiIlJDDHFEREREaoghjoiIiEgNMcQRERERqSGGOCIiIiI1xBBHREREpIYY4oiIiIjUEEMcERERkRpiiCMiIiJSQwxxRERERGqIIY6IiIhIDTHEEREREakhhjgiIiIiNcQQR0RERKSGGOKIiIiI1BBDHBEREZEaYogjIiIiUkMMcURERERqSLOiG0BUFnp6enBybFHRzSCiKkAkEuHO3XsV3QyiUmOII7VkbVULIbu3VXQziKgKCDt7Hj6DAiu6GUSlxuFUIiIiIjXEEEdERESkhhjiiIiIiNQQQxwRERGRGmKIIyIiIlJDnJ1KVU5iUjIeRD2s6GYQUSViZGgAh+bNij0mEAjKuTVEysEQR1XOufMXMXLM+IpuBhFVIi0cmuNUaEixx6RSaTm3hkg5OJxKREREpIYY4oiIiIjUEIdTiahcuLo4oW1rV1haWEAileD8xXAcOXq8optFRKS2GOKISKW6ubvhm68no4VD80Lln40eiYSERCxbsRobt2xDenpGBbVQNZwcWyApKRlPnj6r6KYQURXF4VQiUgm3zh1x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"/>
-<h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tighter italic uppercase">
-        Velocity Air Max <span class="text-brand-gold">Elite</span>
-</h1>
-<p class="text-xl md:text-2xl mb-10 text-slate-300 font-light">Performance running series designed for the modern athlete. Elevate your stride with Al Buqaa.</p>
-<div class="flex flex-col sm:flex-row gap-4 justify-center">
-<a class="bg-brand-gold text-black px-10 py-4 font-bold uppercase tracking-widest hover:bg-white transition-all transform hover:-translate-y-1" href="#catalog">
-          Browse Catalog
-        </a>
-<button class="border border-white/30 backdrop-blur-sm px-10 py-4 font-bold uppercase tracking-widest hover:bg-white/10 transition-all" onclick="showProduct('p1')">
-          Quick View
-        </button>
+<div class="h-10 w-10 bg-brand-gold rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-900 font-bold">diamond</span>
+</div>
+<span class="text-xl font-bold tracking-tighter text-white">AL BUQAA</span>
+</div>
+<div class="hidden items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium animate-pulse-soft" id="live-data-badge">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                Live Data Active
+            </div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-sm font-medium hover:text-brand-gold transition-colors" href="#">Home</a>
+<a class="text-sm font-medium hover:text-brand-gold transition-colors" href="#catalog">Catalog</a>
+<a class="text-sm font-medium hover:text-brand-gold transition-colors" href="#">About</a>
+<a class="px-5 py-2 bg-brand-gold text-slate-900 rounded-full text-sm font-bold hover:bg-yellow-400 transition-all flex items-center gap-2" href="https://wa.me/971561573426" target="_blank">
+<span class="material-symbols-outlined text-sm">chat</span>
+                    WhatsApp Us
+                </a>
 </div>
 </div>
-<!-- END: Hero Section -->
-<!-- BEGIN: Catalog Section -->
-<section class="py-24 bg-slate-950" data-purpose="product-catalog" id="catalog">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="mb-16 text-center">
-<h2 class="text-brand-gold uppercase tracking-[0.3em] text-sm font-bold mb-4">The Collection</h2>
-<h3 class="text-4xl font-bold">New Arrivals</h3>
 </div>
-<!-- Catalog Grid -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="catalog-grid">
-<!-- Default items will be injected by script below -->
+</nav>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative h-[80vh] flex items-center overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-slate-950 to-transparent z-10"></div>
+<img alt="Hero Background" class="absolute inset-0 w-full h-full object-cover opacity-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIl2UXCHP6EZOyCVuUSOLE5frtyYiO8qEUfUZk6eh5HLH0l-p2Ao6KC45KI8kD3RuMRJLdF_oQgcUjfmt4reO39OamJ_7Mb6_BEdifWriJkXIueYre6PQtQrx9LS-zNOOUtaEN-6RDFPbP-9S1ejD-OAbf6qTUQH291nu2blknuWvRoC7-Mr5QVbPMvqk02c1XOtGP8c85MyQFYAlS6HGx98-J2_WuAb2jNhYGQFNlYJuIMm9iKRbz-7SjUeW4H9lwzMzTJu-HDLKc"/>
+<div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="max-w-2xl">
+<h2 class="text-brand-gold font-bold tracking-widest text-sm mb-4 uppercase">New Collection 2024</h2>
+<h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">Elevate Your Everyday Style</h1>
+<p class="text-slate-400 text-lg mb-8 max-w-lg">Discover curated premium apparel designed for those who demand excellence in every detail.</p>
+<div class="flex flex-wrap gap-4">
+<a class="px-8 py-4 bg-brand-gold text-slate-900 font-bold rounded-md hover:bg-yellow-400 transition-all" href="#catalog">Shop Collection</a>
+<a class="px-8 py-4 border border-white/20 text-white font-bold rounded-md hover:bg-white/10 transition-all" href="https://wa.me/971561573426">Contact Expert</a>
+</div>
 </div>
 </div>
 </section>
-<!-- END: Catalog Section -->
-<!-- BEGIN: Product Detail Modal -->
-<div class="fixed inset-0 z-[60] hidden overflow-y-auto" data-purpose="product-detail" id="product-modal">
-<div class="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
-<!-- Backdrop -->
-<div class="absolute inset-0 bg-black/95" onclick="closeProduct()"></div>
-<!-- Content Container -->
-<div class="relative bg-brand-navy w-full max-w-6xl rounded-lg shadow-2xl overflow-hidden grid lg:grid-cols-2">
-<button class="absolute top-6 right-6 z-20 text-white/50 hover:text-white transition-colors" onclick="closeProduct()">
-<svg class="w-8 h-8" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-<!-- Product Image Gallery -->
-<div class="p-8 lg:p-12 space-y-6">
-<div class="aspect-square bg-slate-900 overflow-hidden flex items-center justify-center">
-<img alt="Product Main" class="w-full h-full object-contain" id="modal-main-img" src=""/>
+<!-- Catalog Section -->
+<section class="py-24 bg-slate-950" id="catalog">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+<div>
+<h2 class="text-3xl font-bold text-white mb-4">Our Catalog</h2>
+<p class="text-slate-400">Browse our latest arrivals and premium selections.</p>
+</div>
+<div class="flex gap-4">
+<button class="px-4 py-2 text-sm font-medium border-b-2 border-brand-gold text-brand-gold">All</button>
+<button class="px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">Suits</button>
+<button class="px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">Shoes</button>
+<button class="px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">Accessories</button>
 </div>
 </div>
-<!-- Product Info -->
-<div class="p-8 lg:p-12 bg-black/20 flex flex-col justify-center">
-<div class="mb-8">
-<span class="text-brand-gold font-bold uppercase tracking-widest text-sm mb-2 block" id="modal-category"></span>
-<h2 class="text-4xl lg:text-5xl font-extrabold italic uppercase mb-4" id="modal-title"></h2>
+<!-- Product Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="product-grid">
+<!-- Default Placeholder Content -->
+<div class="group bg-slate-900 rounded-2xl overflow-hidden border border-white/5 hover:border-brand-gold/50 transition-all">
+<div class="aspect-[4/5] relative overflow-hidden">
+<img alt="Product" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQZPe3spxEim6ivFf0zmUnPCzzbe-EsOUUo4hZFdWI60dhbwuWlXiMzJSqTYbT69YIxFXEkPbF4MB7_fz02XQGb9bpgZ8JSC2H4O1ZnrM7adYAgwRUvRhUX_eNlBE1F6e-UWQjyYmJrz-s9Ar8OYzyscKAiylLi_zAPdEN6Ak4q8RVO0cHlVDRtgoOro02mwQcJP1F8hgSpHWYv8WbNdmwz_FzHQxqTcw9tMgvvhSCOtgZ4rqlZbQH4nS5z6_1ZmDJQoSkE3EcTQUA"/>
+</div>
+<div class="p-6">
+<h3 class="text-lg font-bold text-white mb-2">Signature Navy Suit</h3>
+<p class="text-brand-gold font-bold mb-4">AED 1,200</p>
+<a class="w-full py-3 bg-white/5 hover:bg-brand-gold hover:text-slate-900 text-white text-center rounded-xl font-bold transition-all block" href="https://wa.me/971561573426?text=I'm%20interested%20in%20the%20Signature%20Navy%20Suit">Order on WhatsApp</a>
+</div>
+</div>
+<div class="group bg-slate-900 rounded-2xl overflow-hidden border border-white/5 hover:border-brand-gold/50 transition-all">
+<div class="aspect-[4/5] relative overflow-hidden">
+<img alt="Product" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBI2wQ9LLw5AOZRs8rMaDnQuqKimYjEqjlUmvnue3IYydbvOI9CVaHSRJ0PUHdOLRlY4lRlyFeWORsc71T7Ch_-bSjNZPToPCgqvT8-erSxLJUILuPtg9AxpsmiG8GWQfQh0zN2rljyAAjrk2ETMR98_18keQrHMIIm-dfyAUSolVZHSahTtbwMMvoKva8Nmv40OrR2cjpcEwSRDVjdFlAWEHc61-1Oy4bu9cslxkYFY5su0jr2XYszxqGGq5RVGewwPu6V2x41JqxA"/>
+</div>
+<div class="p-6">
+<h3 class="text-lg font-bold text-white mb-2">Charcoal Wool Blazer</h3>
+<p class="text-brand-gold font-bold mb-4">AED 850</p>
+<a class="w-full py-3 bg-white/5 hover:bg-brand-gold hover:text-slate-900 text-white text-center rounded-xl font-bold transition-all block" href="https://wa.me/971561573426?text=I'm%20interested%20in%20the%20Charcoal%20Wool%20Blazer">Order on WhatsApp</a>
+</div>
+</div>
+<div class="group bg-slate-900 rounded-2xl overflow-hidden border border-white/5 hover:border-brand-gold/50 transition-all">
+<div class="aspect-[4/5] relative overflow-hidden">
+<img alt="Product" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLThIrSrx4YzIwcj69hOCLlTjUvV_qFLNpxSJEqkJarfyDMpIdALX5EEME7ywb6dWvGKtCzDYtnRvcbnn0ozR1mvXIIYdqWC08T3OKSX6DB4G-2Com5f0vFaaIOkciq3vSf7hq6o9PwoHuR2Gt7qLwD50u0bbTBeR7XrVSrjge_uddnlfCpEPHvVkPsUYIZckAiG75QWpJMjTbcyh9NJpH7OLeHpZBJ1ihgul07lrvwSgQFFRfEY3yKqO8iV-muuO9GWApOdAahfOh"/>
+</div>
+<div class="p-6">
+<h3 class="text-lg font-bold text-white mb-2">Leather Oxford Shoes</h3>
+<p class="text-brand-gold font-bold mb-4">AED 450</p>
+<a class="w-full py-3 bg-white/5 hover:bg-brand-gold hover:text-slate-900 text-white text-center rounded-xl font-bold transition-all block" href="https://wa.me/971561573426?text=I'm%20interested%20in%20the%20Leather%20Oxford%20Shoes">Order on WhatsApp</a>
+</div>
+</div>
+<div class="group bg-slate-900 rounded-2xl overflow-hidden border border-white/5 hover:border-brand-gold/50 transition-all">
+<div class="aspect-[4/5] relative overflow-hidden">
+<img alt="Product" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7fkFkwJlSqPeLHWvMvxLCM4kxS0paHlwKDDJdm6ngwEphHUziW9Z2Hp9-ncn8oqVhUXZH5yc6UUY-YOaxDA9BOTNZEASVUrUUDrT7WN_JGjwpjN3dWOOhYHHfy6gDfyzamCX2T7aAwNx04ESZQJzl-9EqCIf9d4p_UsahBKTzuQEi8J7OL5TNmvQed1NAyAbQj-Q6_xpoGjVWZLMju3nBu49-cGBxi_UIHUss1ZjvZaKOFlgH3pAgmHvwuiiopp_2f7Y9xRUNMJLV"/>
+</div>
+<div class="p-6">
+<h3 class="text-lg font-bold text-white mb-2">Slim Fit White Shirt</h3>
+<p class="text-brand-gold font-bold mb-4">AED 180</p>
+<a class="w-full py-3 bg-white/5 hover:bg-brand-gold hover:text-slate-900 text-white text-center rounded-xl font-bold transition-all block" href="https://wa.me/971561573426?text=I'm%20interested%20in%20the%20Slim%20Fit%20White%20Shirt">Order on WhatsApp</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-brand-navy py-12 border-t border-white/5">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div class="col-span-1 md:col-span-2">
 <div class="flex items-center gap-4 mb-6">
-<span class="text-3xl font-bold text-brand-gold" id="modal-price"></span>
+<div class="h-8 w-8 bg-brand-gold rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-900 text-sm font-bold">diamond</span>
 </div>
-<p class="text-slate-400 leading-relaxed mb-8" id="modal-desc"></p>
+<span class="text-xl font-bold tracking-tighter text-white">AL BUQAA</span>
 </div>
-<!-- Actions -->
-<div class="space-y-4">
-<div class="flex flex-wrap gap-4 mb-8">
-<div class="w-full">
-<span class="block text-xs font-bold uppercase mb-2 text-slate-500">Select Size</span>
-<div class="flex gap-2" id="size-selector">
-<button class="size-btn w-12 h-12 border border-white/20 hover:border-brand-gold transition-all flex items-center justify-center" onclick="selectSize(this)">40</button>
-<button class="size-btn w-12 h-12 border border-white/20 hover:border-brand-gold transition-all flex items-center justify-center" onclick="selectSize(this)">42</button>
-<button class="size-btn w-12 h-12 border border-white/20 hover:border-brand-gold transition-all flex items-center justify-center" onclick="selectSize(this)">44</button>
-<button class="size-btn w-12 h-12 border border-white/20 hover:border-brand-gold transition-all flex items-center justify-center" onclick="selectSize(this)">45</button>
+<p class="text-slate-400 max-w-sm">Premium quality apparel for the modern gentleman. Experience luxury and comfort like never before.</p>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Contact Us</h4>
+<ul class="space-y-4 text-slate-400">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-brand-gold">call</span>
+                        +971 56 157 3426
+                    </li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-brand-gold">mail</span>
+                        info@albuqaa.ae
+                    </li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-brand-gold">location_on</span>
+                        Dubai, UAE
+                    </li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6">Follow Us</h4>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-gold hover:text-slate-900 transition-all" href="#">
+<span class="material-symbols-outlined">public</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-gold hover:text-slate-900 transition-all" href="#">
+<span class="material-symbols-outlined">camera</span>
+</a>
 </div>
 </div>
 </div>
-<button class="flex items-center justify-center gap-3 w-full bg-[#25D366] text-white py-5 font-bold uppercase tracking-widest hover:brightness-110 transition-all rounded-sm" onclick="orderViaWhatsApp()">
-<svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path></svg>
-              Enquire via WhatsApp
-</button>
+<div class="pt-8 border-t border-white/5 text-center text-slate-500 text-sm">
+            © 2024 Al Buqaa. All rights reserved.
+        </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-<!-- END: Product Detail Modal -->
-<!-- BEGIN: Footer -->
-<footer class="bg-brand-navy py-12 border-t border-white/5" data-purpose="site-footer">
-<div class="max-w-7xl mx-auto px-4 text-center">
-</div></footer></div></div></nav></body></html>
+</footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const LOCAL_STORAGE_KEY = 'al_buqaa_products';
+        const WHATSAPP_NUMBER = '+971561573426';
+        const productGrid = document.getElementById('product-grid');
+        const liveBadge = document.getElementById('live-data-badge');
+
+        function fetchProducts() {
+            const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if (storedData) {
+                try {
+                    const products = JSON.parse(storedData);
+                    if (Array.isArray(products) && products.length > 0) {
+                        renderProducts(products);
+                        liveBadge.classList.remove('hidden');
+                        liveBadge.classList.add('flex');
+                    }
+                } catch (e) {
+                    console.error('Error parsing local products:', e);
+                }
+            }
+        }
+
+        function renderProducts(products) {
+            productGrid.innerHTML = '';
+            
+            products.forEach(product => {
+                const productHtml = `
+                    <div class="group bg-slate-900 rounded-2xl overflow-hidden border border-white/5 hover:border-brand-gold/50 transition-all">
+                        <div class="aspect-[4/5] relative overflow-hidden bg-slate-800">
+                            <img src="${product.image || 'https://images.unsplash.com/photo-1594932224011-0450b3225883?q=80&w=1780&auto=format&fit=crop'}" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                                 alt="${product.name}"
+                                 onerror="this.src='https://images.unsplash.com/photo-1594932224011-0450b3225883?q=80&w=1780&auto=format&fit=crop'">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-white mb-2">${product.name}</h3>
+                            <p class="text-brand-gold font-bold mb-4">AED ${product.price}</p>
+                            <a href="https://wa.me/${WHATSAPP_NUMBER}?text=I'm%20interested%20in%20the%20${encodeURIComponent(product.name)}" 
+                               target="_blank"
+                               class="w-full py-3 bg-white/5 hover:bg-brand-gold hover:text-slate-900 text-white text-center rounded-xl font-bold transition-all block">
+                               Order on WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                `;
+                productGrid.insertAdjacentHTML('beforeend', productHtml);
+            });
+        }
+
+        // Initial fetch
+        fetchProducts();
+
+        // Listen for storage changes in other tabs (if user updates admin while catalog is open)
+        window.addEventListener('storage', (e) => {
+            if (e.key === LOCAL_STORAGE_KEY) {
+                fetchProducts();
+            }
+        });
+    });
+</script>
+</body></html>

@@ -52,6 +52,7 @@
 <script>
     let parsedData = [];
     const ACCESS_CODE = "08141a786";
+    const STORAGE_KEY = 'al_buqaa_products';
 
     function checkAuth() {
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -84,12 +85,15 @@
     }
 
     // Notification helper
-    function showNotification(message) {
+    function showNotification(message, type = 'success') {
         const container = document.getElementById('notification-container');
         const toast = document.createElement('div');
-        toast.className = "notification-toast bg-emerald-600 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 mb-4 pointer-events-auto border border-emerald-400/20";
+        const bgColor = type === 'success' ? 'bg-emerald-600' : 'bg-red-600';
+        const borderColor = type === 'success' ? 'border-emerald-400/20' : 'border-red-400/20';
+        
+        toast.className = `notification-toast ${bgColor} text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 mb-4 pointer-events-auto border ${borderColor}`;
         toast.innerHTML = `
-            <span class="material-symbols-outlined">check_circle</span>
+            <span class="material-symbols-outlined">${type === 'success' ? 'check_circle' : 'error'}</span>
             <span class="font-bold text-sm">${message}</span>
         `;
         container.appendChild(toast);
@@ -136,17 +140,35 @@
 
     function processCSV(text) {
         const lines = text.split('\n');
+        if (lines.length < 2) return;
+        
         const headers = lines[0].split(',').map(h => h.trim());
         const data = [];
 
         for (let i = 1; i < lines.length; i++) {
             if (!lines[i].trim()) continue;
+            // Handle basic CSV comma splitting (not robust for quoted strings, but sufficient for this demo)
             const values = lines[i].split(',').map(v => v.trim());
             const entry = {};
             headers.forEach((h, idx) => {
-                entry[h] = values[idx];
+                entry[h] = values[idx] || "";
             });
-            data.push(entry);
+            
+            // Format into consistent object structure
+            const formattedProduct = {
+                id: 'PROD-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+                name: entry["Product Name"] || 'Unnamed Product',
+                price: parseFloat(entry["Price (AED)"]) || 0,
+                category: entry["Category"] || 'Uncategorized',
+                description: entry["Description"] || '',
+                images: entry["Image Link (Google Drive)"] ? [entry["Image Link (Google Drive)"]] : [],
+                sizes: entry["Available Sizes"] ? entry["Available Sizes"].split(',').map(s => s.trim()) : [],
+                colors: entry["Colors"] ? entry["Colors"].split(',').map(c => c.trim()) : [],
+                status: 'In Stock',
+                createdAt: new Date().toISOString()
+            };
+            
+            data.push(formattedProduct);
         }
 
         parsedData = data;
@@ -169,10 +191,10 @@
 
         previewBody.innerHTML = parsedData.map(item => `
             <tr class="text-xs border-b border-slate-100 dark:border-slate-800">
-                <td class="px-4 py-2 font-bold text-brand-navy dark:text-white truncate max-w-[150px]">${item["Product Name"] || 'N/A'}</td>
-                <td class="px-4 py-2 text-slate-500">${item["Category"] || 'N/A'}</td>
-                <td class="px-4 py-2 font-semibold">AED ${item["Price (AED)"] || '0'}</td>
-                <td class="px-4 py-2 text-blue-500 font-medium truncate max-w-[100px]">${item["Image Link (Google Drive)"] || 'No Link'}</td>
+                <td class="px-4 py-2 font-bold text-brand-navy dark:text-white truncate max-w-[150px]">${item.name}</td>
+                <td class="px-4 py-2 text-slate-500">${item.category}</td>
+                <td class="px-4 py-2 font-semibold text-brand-navy dark:text-brand-gold">AED ${item.price.toLocaleString()}</td>
+                <td class="px-4 py-2 text-blue-500 font-medium truncate max-w-[100px]">${item.images[0] || 'No Link'}</td>
                 <td class="px-4 py-2 text-emerald-500 font-bold">Valid</td>
             </tr>
         `).join('');
@@ -184,52 +206,51 @@
         document.getElementById('process-bulk-btn').classList.add('opacity-50', 'cursor-not-allowed');
         document.getElementById('process-bulk-btn').setAttribute('disabled', 'true');
         document.getElementById('bulk-file-input').value = '';
+        document.getElementById('success-message').classList.add('hidden');
         parsedData = [];
     }
 
     function processImport() {
         if (parsedData.length === 0) return;
 
-        // Get existing inventory or start new
-        const existingInventory = JSON.parse(localStorage.getItem('alBuqaaInventory') || '[]');
+        // Get existing products or start new
+        const existingProducts = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
         
-        // Add timestamp and status to new items
-        const newItems = parsedData.map(item => ({
-            ...item,
-            id: 'PROD-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
-            importedAt: new Date().toISOString(),
-            status: 'In Stock'
-        }));
+        // Merge (Prepend new items for 'Recent' feel)
+        const updatedCatalog = [...parsedData, ...existingProducts];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedCatalog));
 
-        const updatedInventory = [...newItems, ...existingInventory];
-        localStorage.setItem('alBuqaaInventory', JSON.stringify(updatedInventory));
-
-        showNotification('Catalog Updated! Your new products are now live.');
+        // Show Success UI
+        document.getElementById('upload-preview').classList.add('hidden');
+        document.getElementById('success-message').classList.remove('hidden');
+        document.getElementById('process-bulk-btn').classList.add('opacity-50', 'cursor-not-allowed');
+        document.getElementById('process-bulk-btn').setAttribute('disabled', 'true');
+        
+        showNotification(`${parsedData.length} products successfully imported to catalog.`);
         renderRecentLog();
-        resetUpload();
     }
 
     function renderRecentLog() {
-        const inventory = JSON.parse(localStorage.getItem('alBuqaaInventory') || '[]');
+        const catalog = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
         const tableBody = document.getElementById('recent-inventory-tbody');
         
-        if (inventory.length === 0) {
+        if (catalog.length === 0) {
             // Keep default static rows if localstorage is empty
             return;
         }
 
-        tableBody.innerHTML = inventory.slice(0, 5).map(item => `
+        tableBody.innerHTML = catalog.slice(0, 10).map(item => `
             <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
                 <td class="px-6 py-4">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded bg-slate-100 overflow-hidden flex items-center justify-center">
                             <span class="material-symbols-outlined text-slate-400">image</span>
                         </div>
-                        <span class="font-bold text-sm text-brand-navy dark:text-white">${item["Product Name"] || 'Unnamed Product'}</span>
+                        <span class="font-bold text-sm text-brand-navy dark:text-white">${item.name}</span>
                     </div>
                 </td>
-                <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">${item["Category"] || 'Uncategorized'}</td>
-                <td class="px-6 py-4 text-sm font-bold text-brand-navy dark:text-white">AED ${item["Price (AED)"] || '0.00'}</td>
+                <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">${item.category}</td>
+                <td class="px-6 py-4 text-sm font-bold text-brand-navy dark:text-white">AED ${parseFloat(item.price).toLocaleString()}</td>
                 <td class="px-6 py-4">
                     <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> ${item.status || 'In Stock'}
@@ -371,6 +392,25 @@
 <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">check_circle</span> Excel Support</span>
 </div>
 <input accept=".csv" class="absolute inset-0 opacity-0 cursor-pointer" id="bulk-file-input" onchange="handleFileUpload(event)" type="file"/>
+</div>
+<!-- Success State -->
+<div class="hidden w-full text-center space-y-6 py-6" id="success-message">
+<div class="w-20 h-20 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+<span class="material-symbols-outlined text-4xl">verified</span>
+</div>
+<div>
+<h4 class="text-xl font-bold text-brand-navy dark:text-white">Upload Successful!</h4>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Your product catalog has been updated with the new inventory.</p>
+</div>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+<a class="flex items-center gap-2 px-6 py-3 bg-brand-navy text-brand-gold rounded-lg font-bold shadow-lg shadow-brand-navy/20 hover:scale-105 transition-transform" href="#overview">
+<span class="material-symbols-outlined">visibility</span>
+            View Full Catalog
+        </a>
+<button class="text-sm font-bold text-slate-400 hover:text-brand-navy dark:hover:text-white transition-colors" onclick="resetUpload()">
+            Upload Another File
+        </button>
+</div>
 </div>
 <!-- Upload Preview State -->
 <div class="hidden w-full text-left space-y-4" id="upload-preview">
