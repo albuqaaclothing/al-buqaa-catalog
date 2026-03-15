@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Al Buqaa - Admin Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "brand-navy": "#0a192f",
+                        "brand-gold": "#d4af37",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .sidebar-active { background-color: rgba(212, 175, 55, 0.15); border-left: 4px solid #d4af37; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="flex min-h-screen">
+<!-- Sidebar Navigation -->
+<aside class="w-72 bg-brand-navy text-white flex flex-col sticky top-0 h-screen border-r border-brand-gold/20">
+<div class="p-6 border-b border-brand-gold/10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-brand-gold flex items-center justify-center overflow-hidden">
+<img alt="Al Buqaa Logo" data-alt="Al Buqaa luxury brand minimalist logo gold" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrObXhMHDoA3mLt48IU-RSGkGj9o9EtuukpyVFK6FG1tnqJgnMVt7RhIrmGkG9cmabOIn40yj6_Te-KNEH4hNTB5u9criYWFP5J6ROzKFVn8rfhDtwk9-SLVIoOFXKgQsLIY4lEdXrhk8mB66CXKbYkcpCae1mf_WWf99ENLTN8rTlAd5hn0ixpefRLKVl7Nveg-wSf-ye51RsEzRxYUZjpogXX6mpDmHqbDsMF4Cm0wweWXv7mwiBKarKudmjyXciwReD_ykgn8Wb"/>
+</div>
+<div>
+<h1 class="text-lg font-bold tracking-tight text-brand-gold">Al Buqaa</h1>
+<p class="text-xs text-slate-400 font-medium uppercase tracking-widest">Admin Portal</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-4 py-6 space-y-2">
+<a class="sidebar-active flex items-center gap-3 px-4 py-3 rounded-lg text-brand-gold transition-colors" href="#overview">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium text-sm">Inventory Overview</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#add-product">
+<span class="material-symbols-outlined">add_box</span>
+<span class="font-medium text-sm">Add/Edit Product</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#bulk-upload">
+<span class="material-symbols-outlined">upload_file</span>
+<span class="font-medium text-sm">Bulk Upload</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-medium text-sm">Sales Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-medium text-sm">Customers</span>
+</a>
+</nav>
+<div class="p-4 border-t border-brand-gold/10">
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-400 hover:text-white text-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-400 hover:text-white text-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto">
+<!-- Header Section -->
+<header class="bg-white dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800 px-8 py-6 flex justify-between items-center">
+<div>
+<h2 class="text-2xl font-extrabold text-brand-navy dark:text-white tracking-tight">Dashboard</h2>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Welcome back, Administrator</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-400 hover:text-brand-navy dark:hover:text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-10 w-10 rounded-full bg-brand-navy border-2 border-brand-gold flex items-center justify-center text-brand-gold font-bold">
+                JD
+            </div>
+</div>
+</header>
+<div class="p-8 max-w-7xl mx-auto space-y-10">
+<!-- Stats Overview Section -->
+<section class="space-y-6" id="overview">
+<div class="flex items-center justify-between">
+<h3 class="text-xl font-bold text-brand-navy dark:text-white">Inventory Stats</h3>
+<span class="text-xs font-semibold text-slate-500 uppercase tracking-widest bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">Last 24 Hours</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-brand-navy/5 rounded-lg text-brand-navy">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<span class="text-emerald-600 text-xs font-bold bg-emerald-50 px-2 py-1 rounded">+12%</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Total Products</p>
+<p class="text-2xl font-black text-brand-navy dark:text-white">1,240</p>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-amber-500/5 rounded-lg text-amber-600">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<span class="text-amber-600 text-xs font-bold bg-amber-50 px-2 py-1 rounded">Critical</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Low Stock Items</p>
+<p class="text-2xl font-black text-brand-navy dark:text-white">12</p>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-brand-gold/5 rounded-lg text-brand-gold">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="text-emerald-600 text-xs font-bold bg-emerald-50 px-2 py-1 rounded">+5%</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Total Value</p>
+<p class="text-2xl font-black text-brand-navy dark:text-white">$45,200</p>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div class="p-2 bg-primary/5 rounded-lg text-primary">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+<span class="text-slate-400 text-xs font-bold">Stable</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Monthly Orders</p>
+<p class="text-2xl font-black text-brand-navy dark:text-white">842</p>
+</div>
+</div>
+<!-- Category Chart Area -->
+<div class="bg-brand-navy text-white rounded-2xl p-8 border border-brand-gold/30">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h4 class="text-brand-gold font-bold uppercase tracking-widest text-xs mb-1">Performance</h4>
+<h3 class="text-2xl font-bold">Stock Levels by Category</h3>
+</div>
+<div class="text-right">
+<p class="text-3xl font-black text-brand-gold">85%</p>
+<p class="text-xs text-slate-400">Inventory Capacity</p>
+</div>
+</div>
+<div class="grid grid-cols-5 items-end gap-4 h-48 px-4">
+<div class="flex flex-col items-center gap-3">
+<div class="w-full bg-brand-gold/20 rounded-t-lg relative group h-[70%]">
+<div class="absolute bottom-0 w-full bg-brand-gold rounded-t-lg transition-all" style="height: 100%;"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-slate-400">Thobes</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-full bg-brand-gold/20 rounded-t-lg relative h-[90%]">
+<div class="absolute bottom-0 w-full bg-brand-gold rounded-t-lg" style="height: 100%;"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-slate-400">Abayas</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-full bg-brand-gold/20 rounded-t-lg relative h-[50%]">
+<div class="absolute bottom-0 w-full bg-brand-gold rounded-t-lg" style="height: 100%;"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-slate-400">Hijabs</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-full bg-brand-gold/20 rounded-t-lg relative h-[65%]">
+<div class="absolute bottom-0 w-full bg-brand-gold rounded-t-lg" style="height: 100%;"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-slate-400">Acc.</span>
+</div>
+<div class="flex flex-col items-center gap-3">
+<div class="w-full bg-brand-gold/20 rounded-t-lg relative h-[40%]">
+<div class="absolute bottom-0 w-full bg-brand-gold rounded-t-lg" style="height: 100%;"></div>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter text-slate-400">Rugs</span>
+</div>
+</div>
+</div>
+</section>
+<hr class="border-slate-200 dark:border-slate-800"/>
+<!-- Add/Edit Product Form Section -->
+<section class="space-y-8 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm" id="add-product">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h3 class="text-2xl font-black text-brand-navy dark:text-white tracking-tight">Product Management</h3>
+<p class="text-slate-500 dark:text-slate-400">Add a new luxury item or update existing inventory</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">Discard</button>
+<button class="px-6 py-2.5 rounded-lg bg-brand-navy text-brand-gold font-bold shadow-lg shadow-brand-navy/20 hover:bg-brand-navy/90 transition-all">Save Product</button>
+</div>
+</div>
+<form class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+<div class="lg:col-span-2 space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Product Name</label>
+<input class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-brand-gold focus:border-brand-gold" placeholder="e.g. Midnight Silk Thobe" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Price (USD)</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">$</span>
+<input class="w-full pl-8 rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-brand-gold focus:border-brand-gold" placeholder="299.00" type="number"/>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Description</label>
+<textarea class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-brand-gold focus:border-brand-gold" placeholder="Describe the craftsmanship, materials and heritage..." rows="5"></textarea>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-4">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Available Sizes</label>
+<div class="flex flex-wrap gap-2">
+<label class="cursor-pointer">
+<input class="hidden peer" type="checkbox"/>
+<span class="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 peer-checked:bg-brand-navy peer-checked:text-brand-gold peer-checked:border-brand-navy inline-block font-medium text-sm transition-all">S</span>
+</label>
+<label class="cursor-pointer">
+<input checked="" class="hidden peer" type="checkbox"/>
+<span class="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 peer-checked:bg-brand-navy peer-checked:text-brand-gold peer-checked:border-brand-navy inline-block font-medium text-sm transition-all">M</span>
+</label>
+<label class="cursor-pointer">
+<input checked="" class="hidden peer" type="checkbox"/>
+<span class="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 peer-checked:bg-brand-navy peer-checked:text-brand-gold peer-checked:border-brand-navy inline-block font-medium text-sm transition-all">L</span>
+</label>
+<label class="cursor-pointer">
+<input class="hidden peer" type="checkbox"/>
+<span class="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 peer-checked:bg-brand-navy peer-checked:text-brand-gold peer-checked:border-brand-navy inline-block font-medium text-sm transition-all">XL</span>
+</label>
+</div>
+</div>
+<div class="space-y-4">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Colors</label>
+<div class="flex gap-3">
+<div class="w-8 h-8 rounded-full bg-brand-navy ring-2 ring-offset-2 ring-brand-gold cursor-pointer"></div>
+<div class="w-8 h-8 rounded-full bg-[#1c1c1c] ring-1 ring-slate-200 cursor-pointer"></div>
+<div class="w-8 h-8 rounded-full bg-[#f5f5f5] ring-1 ring-slate-200 cursor-pointer"></div>
+<div class="w-8 h-8 rounded-full bg-[#c2b280] ring-1 ring-slate-200 cursor-pointer"></div>
+<button class="w-8 h-8 rounded-full border border-dashed border-slate-400 flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Product Image</label>
+<div class="aspect-square w-full border-2 border-dashed border-brand-gold/30 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex flex-col items-center justify-center p-6 text-center group cursor-pointer hover:border-brand-gold transition-all">
+<div class="w-16 h-16 rounded-full bg-brand-gold/10 text-brand-gold flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">upload_file</span>
+</div>
+<p class="text-sm font-bold text-brand-navy dark:text-white">Click to upload or drag and drop</p>
+<p class="text-xs text-slate-400 mt-2">PNG, JPG or WEBP (Max. 5MB)</p>
+</div>
+<div class="grid grid-cols-3 gap-2 mt-4">
+<div class="aspect-square rounded-lg bg-slate-200 overflow-hidden relative group">
+<img alt="Preview 1" class="w-full h-full object-cover" data-alt="Traditional thobe garment product photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqyZ2UtHhUuwWYMTrxnmPM1yRmlrumHDIHYpQZX8XQoRZUdspzdfUdikwzhrgoM4m9EFHjiRVJCzTraTK1e7zqMTDMo59z5fE-7ujr_lU3YHvVNY04Ka4BGzeb2WE1WcroqpTDjsarZPrMBfakekAtUfc7kfVrUiWxpH8qFFQ0UTRo6UbLUIp--bdq_VFkNJsAN_8qvrvEMqdGE57QZEpcFmwJpZ4bLzsTIHocBZYxlIDWtifBif9Nuy8djgn3B78LXcUZuhcvxmG1"/>
+<button class="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xs">close</span>
+</button>
+</div>
+<div class="aspect-square rounded-lg bg-slate-200 overflow-hidden relative group">
+<img alt="Preview 2" class="w-full h-full object-cover" data-alt="Luxury fabric detail macro shot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDUW3dfZboIbIUyGbk8YcyR_97Qaf9Avp8aaZBbmWbF4RIzQqlRpY3NDoadOtWdo76uXUKDRGxJ1dg6pNCxvcHVKI6BFgyPAU4WR_z0L5HWmN8YrjVvn3taKYi9WdUtEmQusuVsBqDQ4VPBgvy-AddKW0fF3tE8yCKEv3vfPxAahXXQ0YfITrSqdQrCO3qYsYYPsmx6lWsrFnzS-wSJaF_8JZod-0BujDN_jxZXXWn4uGxAQiFC4PKG5yr1NKYSrSdZ8noyyYUZ4C8"/>
+<button class="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xs">close</span>
+</button>
+</div>
+<div class="aspect-square rounded-lg border-2 border-dashed border-slate-300 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+</div>
+</form>
+</section>
+<!-- Bulk Upload Feature Section -->
+<section class="space-y-6 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm" id="bulk-upload">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h3 class="text-2xl font-black text-brand-navy dark:text-white tracking-tight">Bulk Upload</h3>
+<p class="text-slate-500 dark:text-slate-400 text-sm">Update multiple inventory items at once using a CSV or Excel file</p>
+</div>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-brand-gold text-brand-gold font-bold hover:bg-brand-gold/5 transition-all">
+<span class="material-symbols-outlined text-xl">download</span>
+                    Download Template
+                </button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2">
+<div class="relative group h-64 border-2 border-dashed border-brand-gold/30 rounded-2xl bg-slate-50 dark:bg-slate-800/50 flex flex-col items-center justify-center p-8 text-center cursor-pointer hover:border-brand-gold transition-all">
+<div class="w-16 h-16 rounded-full bg-brand-gold/10 text-brand-gold flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">upload_file</span>
+</div>
+<div class="space-y-1">
+<p class="text-base font-bold text-brand-navy dark:text-white">Drop your Excel or CSV file here</p>
+<p class="text-sm text-slate-400">or click to browse from your computer</p>
+</div>
+<div class="mt-4 flex items-center gap-4 text-xs font-semibold text-slate-500 uppercase tracking-widest">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">check_circle</span> Excel (XLSX)</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">check_circle</span> CSV</span>
+</div>
+<input accept=".csv, .xlsx, .xls" class="absolute inset-0 opacity-0 cursor-pointer" type="file"/>
+</div>
+</div>
+<div class="bg-brand-navy/5 dark:bg-white/5 rounded-2xl p-6 flex flex-col justify-center">
+<h4 class="text-brand-navy dark:text-brand-gold font-bold text-sm uppercase tracking-widest mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-xl">info</span>
+                        Instructions
+                    </h4>
+<ul class="space-y-4 text-sm text-slate-600 dark:text-slate-400">
+<li class="flex gap-3">
+<span class="font-bold text-brand-gold">1.</span>
+<span>Download the template to ensure your data columns match our system (Product Name, Category, Price, etc.).</span>
+</li>
+<li class="flex gap-3">
+<span class="font-bold text-brand-gold">2.</span>
+<span><strong>Image Link Support:</strong> You can use direct URLs or public share links from Google Drive for product images.</span>
+</li>
+<li class="flex gap-3">
+<span class="font-bold text-brand-gold">3.</span>
+<span>Review all entries before clicking "Process Bulk Import" to avoid data inconsistencies.</span>
+</li>
+</ul>
+<button class="mt-8 w-full py-3 bg-brand-navy text-brand-gold rounded-lg font-bold shadow-lg shadow-brand-navy/20 hover:bg-brand-navy/90 transition-all opacity-50 cursor-not-allowed">
+                        Process Bulk Import
+                    </button>
+</div>
+</div>
+</section>
+<hr class="border-slate-200 dark:border-slate-800"/>
+<!-- Recent Activity Table -->
+<section class="space-y-4">
+<h3 class="text-xl font-bold text-brand-navy dark:text-white">Recent Inventory Changes</h3>
+<div class="overflow-x-auto bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-widest font-bold">
+<th class="px-6 py-4">Product</th>
+<th class="px-6 py-4">Category</th>
+<th class="px-6 py-4">Price</th>
+<th class="px-6 py-4">Stock Status</th>
+<th class="px-6 py-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-slate-100 overflow-hidden">
+<img alt="Product" data-alt="Abstract minimalist product icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-1drHeQd8wqLezE0KwEM71VEKRRQro0kLinDyTxZlEAVYAlkqdwTYQ4HrwWV3HiCTB55-6JWXwiEt4_PQfOpp3Rl-vW67_updK1rehhgTAkBvlZtLDJosd8rlwiBckzw2V9UoVV8KQR-7bPNdtrblo1ZWZ8mIPhwaIR6WRYoiE7t8aB5QZMW2xkkhglTV5AsWuWziqlMgkj-S41sFoWrbe6YoL9asRs5phseMSvD4hyLGI8SpcdYZiMlZXp9b404i3naH4Pxgi5_r"/>
+</div>
+<span class="font-bold text-sm text-brand-navy dark:text-white">Royal Velvet Abaya</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Abayas</td>
+<td class="px-6 py-4 text-sm font-bold text-brand-navy dark:text-white">$450.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> In Stock
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-brand-navy">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-slate-100 overflow-hidden">
+<img alt="Product" data-alt="Abstract minimalist product icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBm8c_rZRm7VgYA_ctdOqCfwERdhegFULMPYqclxvDdVrM44GixjJcEb5ITlBDCoyDw1V-0F4jfWoM8O7ZqKmx3n_hf9wD0nAIG5T40BxWhGB3E-MRBYBRbpeTRtbcd50rk5SPzENsY_TsSMRASaZW2WymRBdi0UBqy7YM92uw3LqkRWpqNEy7deAzffgw01QWlaYz8UJOAVXDPjvssdO9Xz3hHIAj_IK-0sPR-4AxSkbW9ey0hfjjG3tWLbLqog-lzLDXs06hd46fJ"/>
+</div>
+<span class="font-bold text-sm text-brand-navy dark:text-white">Embroidered Prayer Rug</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Prayer Rugs</td>
+<td class="px-6 py-4 text-sm font-bold text-brand-navy dark:text-white">$125.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Low Stock
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-brand-navy">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Footer -->
+<footer class="mt-12 border-t border-slate-200 dark:border-slate-800 px-8 py-6 text-center text-slate-400 text-xs">
+        © 2024 Al Buqaa. All rights reserved. Admin Management Interface v2.4.0
+    </footer>
+</main>
+</div>
+</body></html>
