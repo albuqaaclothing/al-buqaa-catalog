@@ -61,6 +61,10 @@
 <span class="material-symbols-outlined">upload_file</span>
 <span class="font-medium text-sm">Bulk Upload</span>
 </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#user-management">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span class="font-medium text-sm">User Management</span>
+</a>
 <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white transition-colors" href="#">
 <span class="material-symbols-outlined">analytics</span>
 <span class="font-medium text-sm">Sales Reports</span>
@@ -96,11 +100,131 @@
 <span class="material-symbols-outlined">notifications</span>
 </button>
 <div class="h-10 w-10 rounded-full bg-brand-navy border-2 border-brand-gold flex items-center justify-center text-brand-gold font-bold">
-                JD
-            </div>
+                    JD
+                </div>
 </div>
 </header>
 <div class="p-8 max-w-7xl mx-auto space-y-10">
+<!-- User Management Section -->
+<section class="space-y-8" id="user-management">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h3 class="text-2xl font-black text-brand-navy dark:text-white tracking-tight">User Management</h3>
+<p class="text-slate-500 dark:text-slate-400">Manage administrative access and permissions</p>
+</div>
+<button class="flex items-center gap-2 px-6 py-2.5 rounded-lg bg-brand-navy text-brand-gold font-bold shadow-lg shadow-brand-navy/20 hover:bg-brand-navy/90 transition-all">
+<span class="material-symbols-outlined">person_add</span>
+                        Add New Admin
+                    </button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- New Admin Form -->
+<div class="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+<h4 class="text-lg font-bold text-brand-navy dark:text-white">Register New Admin</h4>
+<form class="space-y-4">
+<div class="space-y-2">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Full Name</label>
+<input class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-brand-gold focus:border-brand-gold" placeholder="e.g. Sarah Ahmed" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Email Address</label>
+<input class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-brand-gold focus:border-brand-gold" placeholder="sarah@albuqaa.com" type="email"/>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-bold text-slate-700 dark:text-slate-300">Role &amp; Permissions</label>
+<select class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-brand-gold focus:border-brand-gold">
+<option>Super Admin</option>
+<option>Inventory Manager</option>
+<option>Sales Associate</option>
+<option>Viewer</option>
+</select>
+</div>
+<div class="pt-2">
+<button class="w-full py-3 bg-brand-navy text-brand-gold rounded-lg font-bold hover:bg-brand-navy/90 transition-all" type="submit">Create Admin Account</button>
+</div>
+</form>
+</div>
+<!-- Admins List -->
+<div class="lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="px-8 py-6 border-b border-slate-200 dark:border-slate-800">
+<h4 class="text-lg font-bold text-brand-navy dark:text-white">Active Administrators</h4>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-widest font-bold">
+<th class="px-8 py-4">Admin</th>
+<th class="px-8 py-4">Role</th>
+<th class="px-8 py-4">Status</th>
+<th class="px-8 py-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-brand-navy text-brand-gold flex items-center justify-center font-bold text-xs">JD</div>
+<div>
+<p class="font-bold text-sm text-brand-navy dark:text-white">John Doe</p>
+<p class="text-xs text-slate-400">john@albuqaa.com</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="text-xs font-semibold text-brand-gold uppercase tracking-wider bg-brand-gold/10 px-2 py-1 rounded">Super Admin</span>
+</td>
+<td class="px-8 py-5">
+<span class="flex items-center gap-1.5 text-xs font-bold text-emerald-600">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Active
+                                            </span>
+</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-1.5 text-slate-400 hover:text-amber-500 transition-colors" title="Reset Password"><span class="material-symbols-outlined text-lg">lock_reset</span></button><button class="p-1.5 text-slate-400 hover:text-brand-navy dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold text-xs">MA</div>
+<div>
+<p class="font-bold text-sm text-brand-navy dark:text-white">Mariam Ali</p>
+<p class="text-xs text-slate-400">mariam@albuqaa.com</p>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="text-xs font-semibold text-slate-500 uppercase tracking-wider bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">Inventory Mgr</span>
+</td>
+<td class="px-8 py-5">
+<span class="flex items-center gap-1.5 text-xs font-bold text-emerald-600">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Active
+                                            </span>
+</td>
+<td class="px-8 py-5 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-1.5 text-slate-400 hover:text-amber-500 transition-colors" title="Reset Password"><span class="material-symbols-outlined text-lg">lock_reset</span></button><button class="p-1.5 text-slate-400 hover:text-brand-navy dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined text-lg">edit</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<hr class="border-slate-200 dark:border-slate-800"/>
 <!-- Stats Overview Section -->
 <section class="space-y-6" id="overview">
 <div class="flex items-center justify-between">
@@ -301,8 +425,8 @@
 </div>
 <button class="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-brand-gold text-brand-gold font-bold hover:bg-brand-gold/5 transition-all">
 <span class="material-symbols-outlined text-xl">download</span>
-                    Download Template
-                </button>
+                        Download Template
+                    </button>
 </div>
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 <div class="lg:col-span-2">
@@ -324,8 +448,8 @@
 <div class="bg-brand-navy/5 dark:bg-white/5 rounded-2xl p-6 flex flex-col justify-center">
 <h4 class="text-brand-navy dark:text-brand-gold font-bold text-sm uppercase tracking-widest mb-4 flex items-center gap-2">
 <span class="material-symbols-outlined text-xl">info</span>
-                        Instructions
-                    </h4>
+                            Instructions
+                        </h4>
 <ul class="space-y-4 text-sm text-slate-600 dark:text-slate-400">
 <li class="flex gap-3">
 <span class="font-bold text-brand-gold">1.</span>
@@ -341,8 +465,8 @@
 </li>
 </ul>
 <button class="mt-8 w-full py-3 bg-brand-navy text-brand-gold rounded-lg font-bold shadow-lg shadow-brand-navy/20 hover:bg-brand-navy/90 transition-all opacity-50 cursor-not-allowed">
-                        Process Bulk Import
-                    </button>
+                            Process Bulk Import
+                        </button>
 </div>
 </div>
 </section>
@@ -376,7 +500,7 @@
 <td class="px-6 py-4">
 <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">
 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> In Stock
-                                </span>
+                                    </span>
 </td>
 <td class="px-6 py-4 text-right">
 <button class="text-slate-400 hover:text-brand-navy">
@@ -398,7 +522,7 @@
 <td class="px-6 py-4">
 <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">
 <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Low Stock
-                                </span>
+                                    </span>
 </td>
 <td class="px-6 py-4 text-right">
 <button class="text-slate-400 hover:text-brand-navy">
@@ -413,8 +537,8 @@
 </div>
 <!-- Footer -->
 <footer class="mt-12 border-t border-slate-200 dark:border-slate-800 px-8 py-6 text-center text-slate-400 text-xs">
-        © 2024 Al Buqaa. All rights reserved. Admin Management Interface v2.4.0
-    </footer>
+            © 2024 Al Buqaa. All rights reserved. Admin Management Interface v2.4.0
+        </footer>
 </main>
 </div>
 </body></html>
