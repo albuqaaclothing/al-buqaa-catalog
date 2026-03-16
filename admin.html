@@ -646,4 +646,19 @@
 </footer>
 </main>
 </div>
+
+<script>
+function exportProductsJSON(){
+  const data = localStorage.getItem('al_buqaa_products') || "[]";
+  const blob = new Blob([data], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'products.json';
+  a.click();
+}
+</script>
+<button onclick="exportProductsJSON()" style="position:fixed;bottom:20px;right:20px;padding:12px 18px;background:#d4af37;color:#000;font-weight:bold;border:none;border-radius:8px;z-index:9999;">
+Export products.json for Website Sync
+</button>
+
 </body></html>

@@ -196,31 +196,14 @@
             // Store default products to show if LS is empty
             const defaultContent = productGrid.innerHTML;
 
-            
-function processImageUrl(url) {
-
-    const fallbackImage =
-    "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop";
-
-    if (!url || url.trim() === "") {
-        return fallbackImage;
-    }
-
-    url = url.trim();
-
-    if (url.startsWith("http") || url.startsWith("data:")) {
-        return url;
-    }
-
-    let path = url.replace(/^(\.\/|\/)/, "");
-
-    if (!path.startsWith("images/")) {
-        path = "images/" + path;
-    }
-
-    return path;
-}
-
+            function processImageUrl(url) {
+                const fallbackImage = 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop';
+                if (!url) return fallbackImage;
+                
+                // If it's a full URL or data URI, use as is
+                if (url.startsWith('http') || url.startsWith('data:')) {
+                    return url;
+                }
                 
                 // Normalize path and prioritize the 'images/' folder
                 let path = url.replace(/^(\.\/|\/)/, '');
@@ -325,4 +308,19 @@ function processImageUrl(url) {
             });
         });
     </script>
+
+<script>
+async function loadProductsFromJSON(){
+  try{
+    const res = await fetch('products.json?cache=' + new Date().getTime());
+    const data = await res.json();
+    localStorage.setItem('al_buqaa_products', JSON.stringify(data));
+    console.log("Catalog synced from products.json");
+  }catch(e){
+    console.log("products.json not found yet");
+  }
+}
+loadProductsFromJSON();
+</script>
+
 </body></html>
